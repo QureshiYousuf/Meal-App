@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Define character encoding for the document -->
+    <meta charset="UTF-8">
+    <!-- Specify the version of Internet Explorer to use -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Set the width of the viewport to the width of the device, and scale the content to fit the viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Meal App</title>
+
+    <!-- Link to external CSS style -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Link to the Font Awesome icon library -->
+    <script src="https://kit.fontawesome.com/3dce9717da.js" crossorigin="anonymous"></script>
+</head>
+<body>   
+
+    <div id="meal-app-container">
+
+        <!-- Header of the meal app -->
+        <header id="app-header">
+            <h4 id="home"> 
+                <i class="fa-solid fa-house fa-fw" title="Home" style="padding: 2px; font-size: 15px;"></i> 
+                <a href="#">Home</a>
+            </h4>
+            <h3>
+                <i class="fa-solid fa-utensils"></i>
+                The Meal App
+            </h3>
+            <h4 id="favourites"> 
+                <i class="fa-brands fa-gratipay"></i> Favourites
+            </h4>
+        </header>
+
+        <div class="divider"></div>
+
+        <!-- Search box to search for meals -->
+        <div id="search-reset">
+            <form autocomplete="on">
+                <input type="search" name="" id="search-box" placeholder="Search your meal here..">
+                <button id="submit-btn">Search <i class="fa-solid fa-magnifying-glass"></i> </button>  
+            </form>
+
+            <button id="reset-btn"> Reset Favourites </button>
+        </div>
+
+        <!-- When no meals are searched, will display this text -->
+        <h2 id="search-for-text">Search for meals <i class="fa-brands fa-searchengin"></i></h2>
+    
+        <!-- This div will contain the complete search results -->
+        <div id="search-results-container"> </div>
+
+        <!-- This div is to show our favourites meals -->
+        <div id="favourites-container" class="hide">    
+        </div>
+    
+    </div>  
+    
+    <script src="script.js"></script>
+
+</body>
+</html>
