@@ -14,11 +14,17 @@ home.addEventListener('click', (e) => {
     location.reload();
 });
 
+// when clicked on favourites on header will call showFav() func to display/show favourite meals
+favourites.addEventListener('click', (e) => {
+    showFav();
+});
+
+// Button to reset our favourites list by clearing the local storage
 resetFavBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    localStorage.clear();
+    localStorage.clear(); // clears the local storage
+    alert('All Favourites have been removed..!');
     location.reload();
-    alert('All Favourites have been removed..!')
 });
 
 // On click listener on search box button
@@ -70,12 +76,13 @@ function displaySearchResults(meals) {
         
         searchResultsContainer.appendChild(mealHeaderDiv); // adding meal header(Image & Name of meal) to search result container
 
-        // creating a div for meal's recipe & ingredients and appending it to search result container 
+        // creating a div for meal's ingredients & recipe instruction to appending it to the search result container 
         const mealRecipeIngredientDiv = document.createElement('DIV');
         mealRecipeIngredientDiv.classList.add('meal-recipe-ingredient-div');
 
         searchResultsContainer.appendChild(mealRecipeIngredientDiv);
 
+        // creating meal ingredients div
         const mealIngredientDiv = document.createElement('DIV');
         mealIngredientDiv.classList.add('meal-ingredients-div');
         mealRecipeIngredientDiv.appendChild(mealIngredientDiv);
@@ -83,7 +90,8 @@ function displaySearchResults(meals) {
 
         const ingredientList = document.createElement('UL'); 
         for(let i = 1; i < 20; i++) {
-            if(meal[`strIngredient${i}`]) { // for each ingredient of the meal creating a list item
+            // adding each ingredient of the meal to a list item
+            if(meal[`strIngredient${i}`]) { 
                 let ingredient = meal[`strIngredient${i}`];
                 let ingredientMeasure = meal[`strMeasure${i}`];
                 const ingredientItems = document.createElement('LI');
@@ -94,6 +102,7 @@ function displaySearchResults(meals) {
         }
         mealIngredientDiv.appendChild(ingredientList);
 
+        // creating recipe instruction div -> this div will be hidden initially on the page
         const recipeInstructionDiv = document.createElement('DIV');
         recipeInstructionDiv.classList.add('recipe-instructions-div');
 
@@ -107,17 +116,20 @@ function displaySearchResults(meals) {
         const readAndFavDiv = document.createElement('DIV');
         searchResultsContainer.appendChild(readAndFavDiv);
 
-        const readMore = document.createElement('a');   // creating a Read More button to show meal's recipe instruction when clicked
+        // creating a Read More button to show meal's recipe instruction when clicked
+        const readMore = document.createElement('a');
         readMore.classList.add('read-more');
         readMore.innerHTML = 'Read More <i class="fa-solid fa-caret-down fa-rotate-270"></i>';
         readAndFavDiv.appendChild(readMore);        
 
-        const addToFav = document.createElement('a');   // creating an anchor tag to add meal to our Favourites when clicked
+        // creating a button to add meal to our Favourites when clicked
+        const addToFav = document.createElement('button'); 
         addToFav.classList.add('add-fav');
         addToFav.innerHTML = '<i class="fa-solid fa-heart-circle-plus fa-bounce"></i> Add To Favourites';
         readAndFavDiv.appendChild(addToFav);
 
-        readMore.addEventListener('click', (e) => {     // when Read More button is clicked it will show a DIV containing the meal's recipe instructions
+        // when Read More button is clicked it will show a DIV containing the meal's recipe instructions
+        readMore.addEventListener('click', (e) => {     
             e.preventDefault();
             mealInstructions.classList.toggle('showInstructions');
             recipeInstructionDiv.classList.toggle('show');
@@ -126,8 +138,17 @@ function displaySearchResults(meals) {
 
         addToFav.addEventListener('click', (e) => {   
             e.preventDefault();
-            // when "Add To Favourites" is clicked, meal will be sent to addToFavourites() func to add that meal to our Favourites
-            addToFavourites(meal);
+            // when "Add To Favourites" is clicked, meal will be sent to addFavourites() func to add that meal to our local storage myFavList
+            addFavourites(meal);
+            
+            // disable the "Add To Favourites" button once meal is added to our favourites & change the innerhtml text.
+            addToFav.setAttribute('disabled', 'disabled');
+            addToFav.innerHTML = '<i class="fa-solid fa-heart-circle-check"></i> Added To Favourites';
+            addToFav.classList.remove('add-fav');
+            addToFav.classList.add('disabled');
+
+            // alert the user that the meal has been added to favourites
+            alert(`${meal.strMeal} has been added to your favorites.`);
         })
 
         const divider = document.createElement('DIV');      // creating a divider to divide list of meals on a web page
@@ -138,103 +159,83 @@ function displaySearchResults(meals) {
 }
 
 
-function addToFavourites(meal) {
-    // if favoritesList doesn't contains the meal sent, then it will be pushed to favoritesList list.
-    if (!favoritesList.includes(meal)) {
-        favoritesList.push(meal);
-        addFavourites();        // call the addFavourites() func to add meal to our favouritesContainer & store meal to local storage.
-        alert(`${meal.strMeal} has been added to your favorites.`);     // alert the user that meal is added to favorites.
-      } else {
-        alert(`${meal.strMeal} is already in your favorites.`);     // if favoritesList contains the meal, alert the user meal is already in your favorites
-        return;
-      }
-}
+// function to add the sent meal to our favourites using local storage
+function addFavourites(meal) {
 
+    const favMeal = document.createElement('DIV');
 
-function addFavourites() {
-
-    // for each meal in the favoritesList creating a div and appending it to favourites container
-    favoritesList.forEach(meal => {
-
-        const favMeal = document.createElement('DIV');
-
-        const mealHeaderDiv = document.createElement('DIV'); // meal header(image & name of the meal)
-        mealHeaderDiv.classList.add('meals-div');
+    const mealHeaderDiv = document.createElement('DIV'); // meal header(image & name of the meal)
+    mealHeaderDiv.classList.add('meals-div');
     
-        const mealImg = document.createElement('IMG');
-        mealImg.src = meal.strMealThumb;
-        mealImg.alt = meal.strMeal;
-        mealHeaderDiv.appendChild(mealImg);
+    const mealImg = document.createElement('IMG');
+    mealImg.src = meal.strMealThumb;
+    mealImg.alt = meal.strMeal;
+    mealHeaderDiv.appendChild(mealImg);
     
-        const mealName = document.createElement('P');
-        mealName.innerHTML = meal.strMeal;
-        mealHeaderDiv.appendChild(mealName);
+    const mealName = document.createElement('P');
+    mealName.innerHTML = meal.strMeal;
+    mealHeaderDiv.appendChild(mealName);
             
-        favMeal.appendChild(mealHeaderDiv);
+    favMeal.appendChild(mealHeaderDiv);
     
-        // creating a div for meal's recipe & ingredients and appending it to search result container 
-        const mealRecipeIngredientDiv = document.createElement('DIV'); 
-        mealRecipeIngredientDiv.classList.add('meal-recipe-ingredient-div');
+    // creating a div for meal's recipe & ingredients and appending it to search result container 
+    const mealRecipeIngredientDiv = document.createElement('DIV'); 
+    mealRecipeIngredientDiv.classList.add('meal-recipe-ingredient-div');
     
-        favMeal.appendChild(mealRecipeIngredientDiv);
+    favMeal.appendChild(mealRecipeIngredientDiv);
     
-        const mealIngredientDiv = document.createElement('DIV');
-        mealIngredientDiv.classList.toggle('meal-ingredients-div-toggle');
+    const mealIngredientDiv = document.createElement('DIV');
+    mealIngredientDiv.classList.toggle('meal-ingredients-div-toggle');
 
-        mealRecipeIngredientDiv.appendChild(mealIngredientDiv);
+    mealRecipeIngredientDiv.appendChild(mealIngredientDiv);
     
-        const ingredientList = document.createElement('UL');
-        for(let i = 1; i < 20; i++) {
-            if(meal[`strIngredient${i}`]) {     // for each ingredient of the meal creating a list item
-                let ingredient = meal[`strIngredient${i}`];
-                let ingredientMeasure = meal[`strMeasure${i}`];
-                const ingredientItems = document.createElement('LI');
-                ingredientItems.innerHTML = ingredient + ' - ' + ingredientMeasure;
-
-                ingredientList.appendChild(ingredientItems);
-            }
+    const ingredientList = document.createElement('UL');
+    for(let i = 1; i < 20; i++) {
+        // adding each ingredient of the meal to a list item
+        if(meal[`strIngredient${i}`]) {     
+            let ingredient = meal[`strIngredient${i}`];
+            let ingredientMeasure = meal[`strMeasure${i}`];
+            const ingredientItems = document.createElement('LI');
+            ingredientItems.innerHTML = ingredient + ' - ' + ingredientMeasure;
+            ingredientList.appendChild(ingredientItems);
         }
-        mealIngredientDiv.appendChild(ingredientList);
+    }
+    mealIngredientDiv.appendChild(ingredientList);
     
-        const recipeInstructionDiv = document.createElement('DIV');
-        recipeInstructionDiv.classList.add('recipe-instructions-div');
-        recipeInstructionDiv.classList.add('show');
+    // recipe instructions div
+    const recipeInstructionDiv = document.createElement('DIV');
+    recipeInstructionDiv.classList.add('recipe-instructions-div');
+    recipeInstructionDiv.classList.add('show');
     
-        const mealInstructions = document.createElement('P');   // creating a P tag to add meal's recipe instruction
-        mealInstructions.classList.add('showInstructions');
-        mealInstructions.innerHTML = meal.strInstructions;
-        recipeInstructionDiv.appendChild(mealInstructions);
-        mealRecipeIngredientDiv.appendChild(recipeInstructionDiv);
+    const mealInstructions = document.createElement('P');   // creating a P tag to add meal's recipe instruction
+    mealInstructions.classList.add('showInstructions');
+    mealInstructions.innerHTML = meal.strInstructions;
+    recipeInstructionDiv.appendChild(mealInstructions);
+    mealRecipeIngredientDiv.appendChild(recipeInstructionDiv);
     
-        const removeButton = document.createElement('button');  // creating a remove button to delete a meal permanently from favourites when clicked
-        removeButton.classList.add('delete-fav');
-        removeButton.innerHTML = ' <i class="fa-solid fa-heart-circle-minus fa-fade"></i> Remove from Favorites';
-        favMeal.appendChild(removeButton);
+    // creating a remove button to delete a meal permanently from favourites when clicked
+    const removeButton = document.createElement('button');  // remove function will be handled from showFav()
+    removeButton.classList.add('delete-fav');
+    removeButton.innerHTML = ' <i class="fa-solid fa-heart-circle-minus fa-fade"></i> Remove from Favorites';
+    favMeal.appendChild(removeButton);
 
-        const divider = document.createElement('DIV');
-        divider.classList.add('meals-divider');
-        favMeal.appendChild(divider);
+    const divider = document.createElement('DIV');
+    divider.classList.add('meals-divider');
+    favMeal.appendChild(divider);
 
-        favouritesContainer.appendChild(favMeal);
-
-    });
+    favouritesContainer.appendChild(favMeal);
 
     saveData();  // save meal to the local storage
 }
 
 
-// when clicked on favourites on header will call showFav() func to display/show favourite meals on a web page
-favourites.addEventListener('click', (e) => {   
-    favoritesList = [];
-    showFav();
-});
-
+// function to show favourites when clicked on Favourites from the header
 function showFav() {
-
     searchForText.classList.add('hide'); // hide 'Search for a meal' txt when showing Favourites container
 
     // if local storage item 'fav' is empty then alert user that there are no favourites
-    if(localStorage.length === 0 || localStorage.getItem('fav') === '') {
+    if(localStorage.length === 0 || localStorage.getItem('myFavList').length < 100) {
+        location.reload();
         alert("No Favourite Meals found..!");        
     }
 
@@ -243,7 +244,7 @@ function showFav() {
     favouritesContainer.classList.add('show-favourites-container');
 
     // fetching favourites from local storage and adding it into favouritesContainer's innerHTML
-    favouritesContainer.innerHTML = localStorage.getItem("fav");
+    favouritesContainer.innerHTML = localStorage.getItem("myFavList");
 
     // Deleting a meal from favourites
     favouritesContainer.addEventListener('click', (e) => {
@@ -254,12 +255,17 @@ function showFav() {
     })
 }
 
+
+// function to remove favourite meal from Favourites
 function removeFromFavorites(e) {
     e.target.parentElement.remove();
+    alert('Meal removed from favourites!');
     favoritesList = [];
     saveData();      // after removing a meal from favourites update the data to the local storage
 }
 
+
+// function to save data to local storage, to be able to load the data into webpage even afer page reload/refresh.
 function saveData() {
-    localStorage.setItem("fav", favouritesContainer.innerHTML);
+    localStorage.setItem("myFavList", favouritesContainer.innerHTML);
 }
