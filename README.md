@@ -21,8 +21,8 @@ Used HTML, CSS and JavaScript programming language to built the website.
 ## 👦 Developed By:
 <h2 align="center">Yusufulla Qureshi</h2>
 <p align="center">
-  <a href="https://github.com/QureshiYousuf">Qureshi</a> 
-    
+<a href="https://github.com/QureshiYousuf">Qureshi</a> 
+<p>(Git Profile)</p>
 <p align="center">
   <a href="mailto:yousuf337692qureshi@gmail.com?subject=Hello%20Qureshi,%20From%20Github"><img src="https://img.shields.io/badge/gmail-%23D14836.svg?&style=for-the-badge&logo=gmail&logoColor=white" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
   ☎️ PH:+91 6363821097
