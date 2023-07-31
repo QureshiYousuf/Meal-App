@@ -4,7 +4,7 @@
 Developed the "Meal App" Web application to show a list of Dishes with photos and names fetched from a remote API from www.themealdb.com. 
 Used HTML, CSS and JavaScript programming language to built the website.
 
-### 🔗 API Used: https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
+### 🔗 API Used: https://www.themealdb.com/api/json/v1/1/search.php?s=
 
 ## 🧪 Steps to Build locally:
 - Open VS Code / Android Studio IDE.
@@ -21,8 +21,8 @@ Used HTML, CSS and JavaScript programming language to built the website.
 ## 👦 Developed By:
 <h2 align="center">Yusufulla Qureshi</h2>
 <p align="center">
-<a href="https://github.com/QureshiYousuf">Qureshi</a> 
-<p>(Git Profile)</p>
+<a href="https://github.com/QureshiYousuf">QureshiYousuf</a> 
+<p align="center">(Git Profile)</p>
 <p align="center">
   <a href="mailto:yousuf337692qureshi@gmail.com?subject=Hello%20Qureshi,%20From%20Github"><img src="https://img.shields.io/badge/gmail-%23D14836.svg?&style=for-the-badge&logo=gmail&logoColor=white" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
   ☎️ PH:+91 6363821097
