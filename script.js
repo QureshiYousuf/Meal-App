@@ -6,7 +6,7 @@ const favourites = document.getElementById('favourites');
 const favouritesContainer = document.getElementById('favourites-container');
 const searchForText = document.getElementById('search-for-text');
 const resetFavBtn = document.getElementById('reset-btn');
-const favoritesList = [];
+let favoritesList = [];
 
 // When clicked on HOME page will be directed to home page 
 home.addEventListener('click', (e) => {
@@ -17,6 +17,7 @@ home.addEventListener('click', (e) => {
 resetFavBtn.addEventListener('click', (e) => {
     e.preventDefault();
     localStorage.clear();
+    location.reload();
     alert('All Favourites have been removed..!')
 });
 
@@ -224,6 +225,7 @@ function addFavourites() {
 
 // when clicked on favourites on header will call showFav() func to display/show favourite meals on a web page
 favourites.addEventListener('click', (e) => {   
+    favoritesList = [];
     showFav();
 });
 
@@ -254,6 +256,7 @@ function showFav() {
 
 function removeFromFavorites(e) {
     e.target.parentElement.remove();
+    favoritesList = [];
     saveData();      // after removing a meal from favourites update the data to the local storage
 }
 
