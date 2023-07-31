@@ -12,7 +12,7 @@ Used HTML, CSS and JavaScript programming language to built the website.
   
 ## 🧪 Steps to Build locally:
 - Open VS Code / Android Studio IDE.
-- Clone with `git clone https://github.com/QureshiYousuf/Meal-App/tree/master`.
+- Clone with `git clone https://github.com/QureshiYousuf/Meal-App`.
   
 ## 💥 How to Contribute?
 
